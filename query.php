@@ -15,15 +15,68 @@
     </style>
 </head>
 
+<?php
+    if (isset($_GET['query'])) {
+        $input = $_GET['query'];
+
+        // Sanitize user input (ToDo)
+        
+
+        // Establish connection with mysql
+        // ToDo: change TEST to production db when we're all done
+        $db = new mysqli('localhost', 'cs143', '', 'TEST');
+        if($db->connect_errno > 0){
+            die('Unable to connect to database [' . $db->connect_error . ']');
+        }
+
+        //$input = "SELECT * FROM Actor WHERE id=10 OR id=11";
+
+        if (!($rs = $db->query($input))) {
+            $output = $db->error;
+        } else {
+            // http://php.net/manual/en/mysqli-result.fetch-fields.php
+            $finfo = $rs->fetch_fields();
+            $tableHeader = "<tr>";
+            foreach($finfo as $val) {
+                $tableHeader = $tableHeader."<th>".$val->name."</th>";
+            }
+            $tableHeader = $tableHeader . "</tr>";
+            unset($val);
+
+            $tableBody = "";
+
+            while($row = $rs->fetch_assoc()) {
+                $tableRow = "<tr>";
+                foreach($row as $val) {
+                    if (empty($val)) $val="n/a";
+                    $tableRow = $tableRow."<td>".$val."</td>";
+                }
+                $tableRow = $tableRow . "</tr>";
+
+                $tableBody = "{$tableBody}{$tableRow}";
+                unset($val);
+                unset($tableRow);
+            }
+
+            $rs -> free();
+        }
+
+        // At the very end, close connection with db
+        $db->close();
+    }
+?>
+
 <div class="container">
 
     <h2><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Project 1B: Web Query</a></h2>
 
     <br />
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                <textarea class="form-control" rows="5" name="inputQuery"></textarea>
+                <textarea
+                class="form-control" rows="5"
+                name="query" placeholder="SELECT * FROM Actor WHERE id=10"></textarea>
                 <br>
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-success">Query</button>
@@ -33,9 +86,32 @@
         </div>
     </div>
     <br /><br />
+    <div class="row">
+        <div class="col-sm-8">
+            <input class="form-control" value="<?php echo "$input";?>" readonly>
+        </div>
 
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <br>
+            <i><?php echo "$output"?></i>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <?php echo $tableHeader ?>
+                </thead>
+                <tbody>
+                    <?php echo $tableBody ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
+
+
+
+
 
 
 </body>

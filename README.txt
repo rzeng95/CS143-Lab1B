@@ -1,3 +1,12 @@
+Siyu Chen:
+1) Added constraints to table creations and finished load.sql to load all the data needed.
+
+2) Furthermore, finished violate.sql, which includes all the query statements that will violate the constraints.
+
+3) Helped fixed a bug in query.php.
+
+
+Roland Zeng:
 This is how I'm working on the project:
 
 1) Copy the contents of /data on the VM onto the shared folder

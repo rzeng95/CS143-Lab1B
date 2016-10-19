@@ -45,7 +45,7 @@
 
             $tableBody = "";
 
-            while($row = $rs->fetch_assoc()) {
+            while($row = $rs->fetch_row()) {
                 $tableRow = "<tr>";
                 foreach($row as $val) {
                     if (empty($val)) $val="n/a";

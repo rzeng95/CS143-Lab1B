@@ -1,9 +1,9 @@
 \! echo "\n\n-------------------------\n";
-DROP DATABASE TEST;
-\! echo "Wiped Database TEST";
-CREATE DATABASE TEST;
-\! echo "Created new Database TEST";
-USE TEST;
+DROP DATABASE CS143;
+\! echo "Wiped Database 143";
+CREATE DATABASE CS143;
+\! echo "Created new Database 143";
+USE CS143;
 
 
 /* Constraints:
@@ -20,7 +20,7 @@ USE TEST;
         4. MovieActor mid references Movie id
         5. MovieAcctor aid references Actor id
         6. Review mid references Movie id
-        
+
     -Three CHECK constraints
         1. Every movie must have a valid release year (year >= 0)
         2. Every actor must have a gender, which limits to just Male or Female
@@ -88,7 +88,7 @@ CREATE TABLE MovieGenre(
     mid INT NOT NULL,             -- Movie ID
     genre VARCHAR(20),   -- Movie genre
     FOREIGN KEY(mid) references Movie(id)
-        ON DELETE CASCADE ON UPDATE CASCADE    
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=INNODB;
 
 /*
@@ -101,7 +101,7 @@ CREATE TABLE MovieDirector(
     FOREIGN KEY(mid) references Movie(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(did) references Director(id)
-        ON DELETE CASCADE ON UPDATE CASCADE             
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=INNODB;
 
 /*

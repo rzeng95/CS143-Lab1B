@@ -19,12 +19,10 @@
     if (isset($_GET['query'])) {
         $input = $_GET['query'];
 
-        // Sanitize user input (ToDo)
-        
 
         // Establish connection with mysql
-        // ToDo: change TEST to production db when we're all done
-        $db = new mysqli('localhost', 'cs143', '', 'TEST');
+
+        $db = new mysqli('localhost', 'cs143', '', 'CS143');
         if($db->connect_errno > 0){
             die('Unable to connect to database [' . $db->connect_error . ']');
         }
